@@ -21,8 +21,20 @@ function paintCanvas () {
     </canvas>`
   imageSection.innerHTML = domCanvas;
 }
+function paintSound () {
+  const soundSection = document.querySelector('.sound-section');
+  const domSound = `
+    <audio 
+    id="audio" 
+    type="audio/wav"
+    preload="none"
+    controls=""
+    src="./lasser.wav" hidden>
+    </audio>`
+  soundSection.innerHTML = domSound;  
+}
 
-function echoColor (event){
+function echoColor (event) {
   var ctx = photoCanvas.getContext("2d");
   
   const imgData = ctx.getImageData(event.pageX, event.pageX, 1, 1);
@@ -30,16 +42,26 @@ function echoColor (event){
   green = imgData.data[1];
   blue = imgData.data[2];
   alpha = imgData.data[3];
-  console.log(red + " hola" + green + " " + blue + " " + alpha);
+  console.log(red, green, blue, alpha);
+
+  const audio = document.getElementById('audio');
+
+  if(red===0 && green === 0 && blue === 0 && alpha === 255){
+    isBlack(audio)
+  }
+}
+
+function isBlack(element){
+  element.play();
 }
 
 
 function builApp() {
   paintForm();
   paintCanvas();
+  paintSound();
   const photoCanvas = document.getElementById('photoCanvas');
   const photoForm = document.getElementById('photoInput');
-
   
   
   photoForm.addEventListener('change',function () {
