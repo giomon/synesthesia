@@ -1,5 +1,3 @@
-console.log("Hola");
-
 function paintForm () {
   const formSection = document.querySelector('.form-section');
   const domForm = `<input
@@ -21,6 +19,7 @@ function paintCanvas () {
     </canvas>`
   imageSection.innerHTML = domCanvas;
 }
+
 function paintSound () {
   const soundSection = document.querySelector('.sound-section');
   const domSound = `
@@ -35,18 +34,12 @@ function paintSound () {
 }
 
 function echoColor (event) {
-  var ctx = photoCanvas.getContext("2d");
-  
-  const imgData = ctx.getImageData(event.pageX, event.pageX, 1, 1);
-  red = imgData.data[0];
-  green = imgData.data[1];
-  blue = imgData.data[2];
-  alpha = imgData.data[3];
-  console.log(red, green, blue, alpha);
-
+  const canvasContex = photoCanvas.getContext("2d");
   const audio = document.getElementById('audio');
-
-  if(red===0 && green === 0 && blue === 0 && alpha === 255){
+  const imgData = canvasContex.getImageData(event.pageX, event.pageX, 1, 1);
+  
+  [red, green, blue, alpha] = imgData.data;
+  if(red < 35 && green < 35 && blue < 35 && alpha === 255){
     isBlack(audio)
   }
 }
@@ -54,7 +47,6 @@ function echoColor (event) {
 function isBlack(element){
   element.play();
 }
-
 
 function builApp() {
   paintForm();
