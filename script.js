@@ -1,3 +1,6 @@
+/**
+ * Function for paint the form component.
+ */
 function paintForm () {
   const formSection = document.querySelector('.form-section');
   const domForm = `<input
@@ -8,6 +11,9 @@ function paintForm () {
   formSection.innerHTML = domForm;
 }
 
+/**
+ * Function for paint the canvas component.
+ */
 function paintCanvas () {
   const imageSection = document.querySelector('.image-section');
   const domCanvas = `<canvas 
@@ -20,6 +26,9 @@ function paintCanvas () {
   imageSection.innerHTML = domCanvas;
 }
 
+/**
+ * Function for paint the audio component.
+ */
 function paintSound () {
   const soundSection = document.querySelector('.sound-section');
   const domSound = `
@@ -33,21 +42,38 @@ function paintSound () {
   soundSection.innerHTML = domSound;  
 }
 
+/**
+ * Function for get the canvas
+ * contex and play the sound
+ * when a color near black is
+ * press at the image.
+ */
 function echoColor (event) {
   const canvasContex = photoCanvas.getContext("2d");
   const audio = document.getElementById('audio');
   const imgData = canvasContex.getImageData(event.pageX, event.pageX, 1, 1);
   
   [red, green, blue, alpha] = imgData.data;
-  if(red < 35 && green < 35 && blue < 35 && alpha === 255){
+  if(red < 85 && green < 85 && blue < 85 && alpha === 255){
     isBlack(audio)
   }
 }
 
+/**
+ * This function play
+ * the audio element
+ * @param {Node} element 
+ */
 function isBlack(element){
   element.play();
 }
 
+
+/**
+ * Function for init the 
+ * app & put all the
+ * elemts in the Document
+ */
 function builApp() {
   paintForm();
   paintCanvas();
@@ -55,8 +81,19 @@ function builApp() {
   const photoCanvas = document.getElementById('photoCanvas');
   const photoForm = document.getElementById('photoInput');
   
-  
+
+  /**
+   * When a image is upload
+   * Put the image in the canvas
+   *  
+   * */
   photoForm.addEventListener('change',function () {
+    const canvasContext = photoCanvas.getContext("2d");
+
+    canvasContext.clearRect(0, 0, photoCanvas.width, photoCanvas.height);
+    canvasContext.fillStyle = "white";
+
+
     const photoFile = this.files[0];
     const filereader = new FileReader();
     
@@ -64,8 +101,7 @@ function builApp() {
       const img = new Image();
 
       img.addEventListener('load', function(){
-        ctx = photoCanvas.getContext("2d")
-        ctx.drawImage(img, 0, 0);
+        canvasContext.drawImage(img, 0, 0);
       });
 
       img.src = event.target.result;
