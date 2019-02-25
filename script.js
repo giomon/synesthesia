@@ -23,7 +23,7 @@ function paintCanvas () {
   const imageSection = document.querySelector('.image-section');
   const domCanvas = `<canvas 
     id="photoCanvas"  
-    width="400" 
+    width="360" 
     height="400" 
     >
     </canvas>`
@@ -195,6 +195,8 @@ function builApp() {
   const photoCanvas = document.getElementById('photoCanvas');
   const photoForm = document.getElementById('photoInput');
   
+  photoCanvas.width = window.innerWidth;
+  photoCanvas.height = window.innerHeight;
 
   photoCanvas.addEventListener("touchstart", handleStart, false);
   photoCanvas.addEventListener("touchmove", handleMove, false);
