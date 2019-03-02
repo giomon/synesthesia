@@ -23,7 +23,7 @@ function paintCanvas () {
   const imageSection = document.querySelector('.image-section');
   const domCanvas = `<canvas 
     id="photoCanvas"  
-    width="360" 
+    width="100%" 
     height="400" 
     >
     </canvas>`
